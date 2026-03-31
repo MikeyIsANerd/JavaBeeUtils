@@ -3,8 +3,6 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
-import com.qualcomm.robotcore.hardware.DcMotor;
-
 import org.firstinspires.ftc.robotcore.external.navigation.Pose2D;
 
 import JavaBee.Robot;
@@ -12,12 +10,13 @@ import JavaBee.MecanumDrivetrain;
 import Javabee.hardware;
 import Javabee.utils.controllers.PVSController;
 
-/*
+/**
  * Turn off syntax highlighting for this file in the top right of your editor.
  * This is a "vision" of what we want JavaBee to look like, not all of these methods exist yet.
+ * @author Dylan B. - 18597 RoboClovers Delta
  */
-@TeleOp(name="Test Teleop", group="Linear Opmode")
-public class TestTeleop extends LinearOpMode {
+@TeleOp(name="Vision Teleop", group="Linear Opmode")
+public class VisionTeleOp extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
         // NOTE: This wouldn't have to be done for Pedro users
@@ -49,17 +48,17 @@ public class TestTeleop extends LinearOpMode {
                 .setTolerance(50) // Acceptable error in ticks per second (.atTarget() will return true if the error is within this range)
                 .setOutputRange(-1, 1);
         Hardware.Motor launcher_left = new Hardware.Motor("launcher_left", hardwareMap)
-                .setDirection(Hardware.Motor.Direction.REVERSE);
+                .setDirection(Hardware.Motor.Direction.REVERSE)
                 .setZeroPowerMode(Hardware.Motor.ZeroPowerMode.BRAKE)
                 .setRunMode(Hardware.Motor.RunMode.VELOCITY) // POWER, POSITION, VELOCITY
                 .setController(launcherController); // Set the PVS controller for this motor
         Hardware.Motor launcher_right = new Hardware.Motor("launcher_right", hardwareMap)
-                .setDirection(Hardware.Motor.Direction.FORWARD);
+                .setDirection(Hardware.Motor.Direction.FORWARD)
                 .setZeroPowerMode(Hardware.Motor.ZeroPowerMode.BRAKE)
                 .setRunMode(Hardware.Motor.RunMode.VELOCITY) // POWER, POSITION, VELOCITY
                 .setController(launcherController.copy()); // Use a copy of the controller for the second motor to avoid shared state issues
         Hardware.MotorGroup launcherGroup = new Hardware.MotorGroup("launcher")
-                .addMotor(launcher_left);
+                .addMotor(launcher_left)
                 .addMotor(launcher_right);
 
         Hardware.Servo transferServo = new Hardware.Servo("transfer_servo", hardwareMap)
@@ -70,7 +69,7 @@ public class TestTeleop extends LinearOpMode {
         Robot robot = new Robot(hardwareMap)
                 .setBulkReads(Robot.BulkReadMode.MANUAL) // AUTO, MANUAL, NONE
                 .setFieldCentric(false) // Set to true for field-centric control, false for robot-centric
-                .setDrivetrain(drivetrain); // Works for both Pedro and regular Mecanum
+                .setDrivetrain(drivetrain) // Works for both Pedro and regular Mecanum
                 .addHardware(launcher)
                 .addHardware(transferServo);
 
